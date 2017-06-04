@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片轮播基本原理演示</title>
+    <style>
+        * {
+            padding: 0;
+            border: none;
+            margin: 0;
+        }
+
+        .container {
+            width:100%;
+            height:500px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-top: 50px;
+        }
+        .carousel-wrapper {
+            overflow: visible;
+            width:25%;
+            height:50%;
+            outline: 3px solid #000;
+            margin: 5% auto;
+            position: relative;
+        }
+        .carousel-item-wrapper {
+            width:200%;
+            height:80%;
+            outline: 3px solid #f00;
+            position: absolute;
+            top:10%;
+            /*绝对定位的半分比值，仅仅只相对于相对定位元素的宽/高。*/
+            left: 0;
+            animation: carousel-demo 2s linear infinite;
+        }
+        .carousel-item-wrapper h3 {
+            /*line-height:200px;*/
+            padding-top: 70px;
+        }
+        
+        @keyframes carousel-demo {
+            100%{left: -100%;}
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>黑色边框的父元素利用overflow:hidden;作为窗口</h2>
+    <h3>红色边框的子元素嵌套其中循环移动，<br>形成走马灯一样的滑动效果。</h3>
+    <div class="carousel-wrapper">
+        <div class="carousel-item-wrapper">
+        </div>
+    </div>
+</div>
+</body>
+</html>

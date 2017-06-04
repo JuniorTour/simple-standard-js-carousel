@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>carousel-step-3</title>
+    <style>
+        /*reset*/
+        * {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        button {
+            outline: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .carousel-wrapper {
+            width: 520px;
+            height: 280px;
+            overflow: hidden; /*关键*/
+            position: relative;
+            margin: 100px auto;
+        }
+
+        .carousel-item-wrapper {
+            width: 3640px;
+            height: 280px;
+            position: absolute;
+            top: 0;
+            left: -520px;
+            /*transition: left .2s ease-in;*/
+            /*默认不使用CSS声明的过渡属性，避免一次滑动多页的bug。*/
+        }
+
+        .carousel-item a {
+            display: block;
+            background-color: red;
+            width: 520px;
+            height: 280px;
+        }
+
+        /*使用不同背景色的a替代图片。*/
+        .carousel-item:nth-child(1) a {
+            background-color: rgb(129, 194, 214);
+            /*第五张图片的复制*/
+        }
+
+        .carousel-item:nth-child(2) a {
+            background-color: rgb(129, 146, 214);
+        }
+
+        .carousel-item:nth-child(3) a {
+            background-color: rgb(217, 179, 230);
+        }
+
+        .carousel-item:nth-child(4) a {
+            background-color: rgb(220, 247, 161);
+        }
+
+        .carousel-item:nth-child(5) a {
+            background-color: rgb(131, 252, 216);
+        }
+
+        .carousel-item:nth-child(6) a {
+            background-color: rgb(129, 194, 214);
+        }
+
+        .carousel-item:nth-child(7) a {
+            background-color: rgb(129, 146, 214);
+            /*第一张图片的复制*/
+        }
+
+        .carousel-item {
+            float: left;
+        }
+
+        .carousel-index-mark {
+            font-size: 60px;
+            color: black;
+            position: absolute;
+            top: 0;
+        }
+
+        .carousel-control-wrapper {
+            transition: all .2s;
+        }
+
+        .carousel-wrapper:hover button {
+            display: block;
+        }
+
+        .carousel-control-wrapper button {
+            transition: all .2s linear;
+            display: none;
+            width: 24px;
+            height: 36px;
+            line-height: 36px;
+            background-color: rgba(0, 0, 0, .3);
+            color: #fff;
+            position: absolute;
+            top: 50%;
+            cursor: pointer;
+        }
+
+        button#prev {
+            left: 0;
+        }
+
+        button#next {
+            right: 0;
+        }
+
+        button i {
+            font-size: 18px;
+        }
+
+        .carousel-index-wrapper {
+            width: 65px;
+            height: 13px;
+            overflow: hidden;
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            margin-left: -33px;
+        }
+
+        .carousel-index-btn {
+            width: 9px;
+            height: 9px;
+            float: left;
+            margin: 2px;
+            background-color: #b7b7b7;
+            border-radius: 50%;
+            text-indent: -999em;
+            /*这个-999em的文字对齐声明有助于增强可访问性。*/
+            cursor: pointer;
+        }
+
+        .active-carousel-index-btn {
+            background-color: #f44103;
+        }
+    </style>
+</head>
+<body>
+<div class="carousel-wrapper">
+    <div class="carousel-item-wrapper" style="left: -520px;">
+        <div class="carousel-item">
+            <a href="#">
+                <!--As an demo,I use pure background color as example instead of img.-->
+                <!--<img src="img/carousel-img-5" alt="">-->
+            </a>
+            <div class="carousel-index-mark">
+                copy-5
+            </div>
+        </div>
+        <div class="carousel-item">
+            <a href="#">
+                <!--<img src="img/carousel-img-1" alt="">-->
+            </a>
+            <div class="carousel-index-mark">
+                1
+            </div>
+        </div>
+        <div class="carousel-item">
+            <a href="#">
+                <!--<img src="img/carousel-img-2" alt="">-->
+            </a>
+            <div class="carousel-index-mark">
+                2
+            </div>
+        </div>
+        <div class="carousel-item">
+            <a href="#">
+                <!--<img src="img/carousel-img-3" alt="">-->
+            </a>
+            <div class="carousel-index-mark">
+                3
+            </div>
+        </div>
+        <div class="carousel-item">
+            <a href="#">
+                <!--<img src="img/carousel-img-4" alt="">-->
+            </a>
+            <div class="carousel-index-mark">
+                4
+            </div>
+        </div>
+        <div class="carousel-item">
+            <a href="#">
+                <!--<img src="img/carousel-img-5" alt="">-->
+            </a>
+            <div class="carousel-index-mark">
+                5
+            </div>
+        </div>
+        <div class="carousel-item">
+            <a href="#">
+                <!--<img src="img/carousel-img-1" alt="">-->
+            </a>
+            <div class="carousel-index-mark">
+                copy-1
+            </div>
+        </div>
+    </div>
+    <div class="carousel-control-wrapper">
+        <button id="prev">
+            <!--prev-->
+            <i>&lt;</i>
+        </button>
+        <button id="next">
+            <!--next-->
+            <i>&gt;</i>
+        </button>
+    </div>
+    <div class="carousel-index-wrapper">
+        <ul>
+            <li class="carousel-index-btn active-carousel-index-btn" id="carousel-to-1">carousel-index-1</li>
+            <li class="carousel-index-btn" id="carousel-to-2">carousel-index-2</li>
+            <li class="carousel-index-btn" id="carousel-to-3">carousel-index-3</li>
+            <li class="carousel-index-btn" id="carousel-to-4">carousel-index-4</li>
+            <li class="carousel-index-btn" id="carousel-to-5">carousel-index-5</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    function addLoadEvent(func) {
+        var oldLoad = window.onload;
+        if (typeof oldLoad != 'function') {
+            window.onload = func;
+        } else {
+            window.onload = function () {
+                oldLoad();
+                func();
+            }
+        }
+    }
+    //给文档加载完成后的load事件绑定相应的处理函数：
+    addLoadEvent(preventDefaultAnchors);
+    addLoadEvent(carouselControl);
+
+    /*用一个对象把轮播的相关参数封装起来，优点是灵活便于扩展升级；缺点是同时也增加了文件的体积。*/
+    var carouselInfo = {
+        itemWidth: 520,
+        trueItemNum: 5,
+        itemNum: 7,
+        totalWidth: 7 * 520
+    };
+
+    //阻止a标签默认的点击跳转行为
+    function preventDefaultAnchors() {
+        var allAnchors = document.querySelectorAll('a');
+
+        for (var i = 0; i < allAnchors.length; i++) {
+            allAnchors[i].addEventListener('click', function (e) {
+                e.preventDefault();
+            }, false);
+        }
+    }
+
+    function carouselControl() {
+        var prev = document.querySelector("#prev");
+        var next = document.querySelector("#next");
+        var carouselWrapper = document.querySelector(".carousel-wrapper");
+        //添加索引按钮的引用
+        var indexBtns = document.querySelectorAll(".carousel-index-btn");
+
+        //标记当前所在的图片编号，用于配合index btn。
+        var currentItemNum = 1;
+        prev.onclick = function () {
+            //把滑动功能和切换索引按钮功能装入一个函数之中，以便于获取当前索引：
+            currentItemNum=prevItem(currentItemNum);
+        };
+        next.onclick = function () {
+            //把滑动功能和切换索引按钮功能装入一个函数之中，以便于获取当前索引：
+            currentItemNum=nextItem(currentItemNum);
+        };
+
+        for (var i = 0; i < indexBtns.length; i++) {
+            //利用立即调用函数，解决闭包的副作用，传入相应的index值
+            (function (i) {
+                indexBtns[i].onclick = function () {
+                    slideTo(i+1);
+                    currentItemNum=i+1;
+                }
+            })(i);
+        }
+
+        //添加定时器和绑定事件
+        var scrollTimer;
+        function play() {
+            scrollTimer=setInterval(function () {
+                currentItemNum=nextItem(currentItemNum);
+            },2000);
+        }
+        play();
+
+        function stop() {
+            clearInterval(scrollTimer);
+        }
+
+        carouselWrapper.addEventListener('mouseover',stop);
+        carouselWrapper.addEventListener('mouseout',play,false);
+
+        /*DOM二级的addEventListener相对于on+sth的优点是：
+         * 1.addEventListener可以先后添加多个事件，同时这些事件还不会相互覆盖。
+         * 2.addEventListener可以控制事件触发阶段，通过第三个可选的useCapture参数选择冒泡还是捕获。
+         * 3.addEventListener对任何DOM元素都有效，而不仅仅是HTML元素。*/
+    }
+
+    function nextItem(currentItemNum) {
+        slide(1);
+        currentItemNum += 1;
+        if (currentItemNum == 6) currentItemNum = 1;
+        switchIndexBtn(currentItemNum);
+
+        return currentItemNum;
+    }
+
+    function prevItem(currentItemNum) {
+        slide(-1);
+        currentItemNum -= 1;
+        if (currentItemNum == 0) currentItemNum = 5;
+        switchIndexBtn(currentItemNum);
+
+        return currentItemNum;
+    }
+
+    //添加直接跳转函数：
+    function slideTo(targetNum) {
+        var itemWrapper=document.querySelector(".carousel-item-wrapper");
+        itemWrapper.style.left=-(targetNum*carouselInfo.itemWidth)+'px';
+        switchIndexBtn(targetNum);
+    }
+
+    function slide(slideItemNum) {
+        var itemWrapper = document.querySelector(".carousel-item-wrapper");
+        var currentLeftOffset = (itemWrapper.style.left) ? parseInt(itemWrapper.style.left) : 0,
+            targetLeftOffset = currentLeftOffset - (slideItemNum * carouselInfo.itemWidth);
+
+        itemWrapper.style.left = targetLeftOffset + 'px';
+    }
+
+    function switchIndexBtn(targetNum) {
+        //切换当前的索引按钮
+        //delete the past active-index class
+        var activeBtn=document.querySelector(".active-carousel-index-btn");
+        activeBtn.className=activeBtn.className.replace(" active-carousel-index-btn","");
+
+        //add a new active btn
+        var targetBtn=document.querySelectorAll(".carousel-index-btn")[targetNum-1];
+        targetBtn.className+=" active-carousel-index-btn";
+    }
+</script>
+</body>
+</html>
